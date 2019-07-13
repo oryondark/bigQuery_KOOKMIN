@@ -5,13 +5,13 @@ class BigqueryParser():
 
     def __init__(self, project, bq_dataset):
         '''
-        project = 'bigquery-public-data'
+        project = 'bigquery-public-data
         bq_dataset = 'crypto_bitcoin'
         '''
         try:
             self.client = bigquery.Client()
-            self.hn_dataset_ref = client.dataset(bq_dataset, project=bq_dataset)
-            self.hn_dset = client.get_dataset(self.hn_dataset_ref)
+            self.hn_dataset_ref = self.client.dataset(bq_dataset, project=project)
+            self.hn_dset = self.client.get_dataset(self.hn_dataset_ref)
         except Exception as E:
             print(E)
 
@@ -25,10 +25,10 @@ class BigqueryParser():
         print(hn_full.schema)
 
     def run_query(self, table_key, toJoin_array=None, location="US"):
-        hn_dset = self.client.get_dataset(self.hn_dataset_ref)
         '''
         This function will be returned to you do requests for getting data from BigQuery
         '''
+        hn_dset = self.client.get_dataset(self.hn_dataset_ref)
         hn_full = self.client.get_table(hn_dset.table(table_key))
         standard_query = hn_full.view_query
         query = (str(standard_query))
@@ -45,7 +45,7 @@ class BigqueryParser():
                 location=location)
 
     def read(self, file_name=None):
-        #It will be saved to tmp directory and created string(Text) file format.
+        #It will be saved to tmp directory.
         for row in self.query_job:
             if file_name is None:
                 print(dict(row))
